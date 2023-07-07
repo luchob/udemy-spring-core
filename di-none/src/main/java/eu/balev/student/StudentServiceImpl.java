@@ -2,6 +2,7 @@ package eu.balev.student;
 
 import eu.balev.student.model.Student;
 import eu.balev.student.repository.FileStudentRepository;
+import eu.balev.student.repository.InMemoryStudentRepository;
 import eu.balev.student.repository.StudentRepository;
 
 import java.time.LocalDate;
@@ -14,7 +15,8 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
 
     public StudentServiceImpl() {
-        this.studentRepository = new FileStudentRepository();
+        // we may pass this
+        this.studentRepository = new InMemoryStudentRepository();
     }
 
     @Override
