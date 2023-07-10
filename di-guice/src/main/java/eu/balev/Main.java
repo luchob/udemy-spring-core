@@ -8,12 +8,9 @@ import eu.balev.student.StudentService;
 public class Main {
     public static void main(String[] args) {
 
-        Injector injector = Guice
-                .createInjector(new StudentModule());
+        Injector injector = Guice.createInjector(new StudentModule());
 
-        StudentService studentService =
-                injector.getInstance(StudentService.class);
-
+        StudentService studentService = injector.getInstance(StudentService.class);
 
         System.out.println(studentService.findYoungestStudents());
     }

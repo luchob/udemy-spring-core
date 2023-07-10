@@ -1,7 +1,6 @@
 package eu.balev.student;
 
 import eu.balev.student.model.Student;
-import eu.balev.student.repository.InMemoryStudentRepository;
 import eu.balev.student.repository.StudentRepository;
 import jakarta.inject.Inject;
 
@@ -15,7 +14,7 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
 
     @Inject
-    public StudentServiceImpl( StudentRepository studentRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository) {
         // we may pass this
         this.studentRepository = studentRepository;
     }
