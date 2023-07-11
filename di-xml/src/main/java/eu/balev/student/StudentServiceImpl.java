@@ -35,4 +35,9 @@ public class StudentServiceImpl implements StudentService {
                     .collect(Collectors.toSet());
         }
     }
+
+    @Override
+    public void init() {
+        System.out.println("We have " + studentRepository.count() + " student(s).");
+    }
 }

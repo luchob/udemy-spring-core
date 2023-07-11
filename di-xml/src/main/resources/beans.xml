@@ -7,6 +7,7 @@
         class="eu.balev.student.repository.FileStudentRepository"/>
 
     <bean id="studentService"
+          init-method="init"
           class="eu.balev.student.StudentServiceImpl"
           autowire="constructor"/>
 

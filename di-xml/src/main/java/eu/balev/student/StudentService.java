@@ -8,4 +8,5 @@ public interface StudentService {
 
     Set<Student> findYoungestStudents();
 
+    void init();
 }

@@ -42,7 +42,7 @@ class StudentServiceImplTest {
         }
 
         @Override
-        public int countStudents() {
+        public int count() {
             return testStudents.size();
         }
     }
