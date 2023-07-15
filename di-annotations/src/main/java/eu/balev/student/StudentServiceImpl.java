@@ -2,18 +2,20 @@ package eu.balev.student;
 
 import eu.balev.student.model.Student;
 import eu.balev.student.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
 
-    @Autowired
     public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
