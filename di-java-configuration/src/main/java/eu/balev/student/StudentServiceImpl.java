@@ -16,8 +16,8 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
 
-    public StudentServiceImpl(List<StudentRepository> studentRepositories) {
-        this.studentRepository = new CompositeStudentReposisotry(studentRepositories);
+    public StudentServiceImpl(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
     }
 
     @Override
@@ -44,30 +44,5 @@ public class StudentServiceImpl implements StudentService {
     @PostConstruct
     public void init() {
         System.out.println("We have " + studentRepository.count() + " student(s).");
-    }
-
-
-    static class CompositeStudentReposisotry implements StudentRepository {
-
-        private final List<StudentRepository> studentRepositories;
-
-        CompositeStudentReposisotry(List<StudentRepository> studentRepositories) {
-            this.studentRepositories = studentRepositories;
-        }
-
-        @Override
-        public List<Student> getAllStudents() {
-            return studentRepositories
-                    .stream()
-                    .flatMap(r -> r.getAllStudents().stream())
-                    .toList();
-        }
-
-        @Override
-        public int count() {
-            return studentRepositories.
-                    stream().
-                    mapToInt(StudentRepository::count).sum();
-        }
     }
 }
