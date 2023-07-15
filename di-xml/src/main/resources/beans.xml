@@ -3,12 +3,11 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="studentRepository"
+    <bean id="fileStudentRepository"
         class="eu.balev.student.repository.FileStudentRepository"/>
 
     <bean id="studentService"
           init-method="init"
-          class="eu.balev.student.StudentServiceImpl"
-          autowire="constructor"/>
+          class="eu.balev.student.StudentServiceImpl"/>
 
 </beans>
