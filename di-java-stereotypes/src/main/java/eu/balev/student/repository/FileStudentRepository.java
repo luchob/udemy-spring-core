@@ -1,12 +1,14 @@
 package eu.balev.student.repository;
 
 import eu.balev.student.model.Student;
+import org.springframework.stereotype.Repository;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.List;
 
+@Repository("fileRepo")
 public class FileStudentRepository implements StudentRepository {
     @Override
     public List<Student> getAllStudents() {

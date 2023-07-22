@@ -1,10 +1,12 @@
 package eu.balev.student.repository;
 
 import eu.balev.student.model.Student;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Repository("inMemoryRepo")
 public class InMemoryStudentRepository implements StudentRepository {
     private final List<Student> students = List.of(
             new Student("Nina Bojinova", LocalDate.of(1977, 12, 9)),
