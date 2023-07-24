@@ -3,22 +3,20 @@ package eu.balev.student;
 import eu.balev.student.model.Student;
 import eu.balev.student.repository.StudentRepository;
 import jakarta.annotation.PostConstruct;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Service
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
 
     public StudentServiceImpl(List<StudentRepository> studentRepositories) {
-        this.studentRepository = new CompositeStudentReposisotry(studentRepositories);
+        this.studentRepository = new CompositeRepository(studentRepositories);
     }
 
     @Override
@@ -47,12 +45,11 @@ public class StudentServiceImpl implements StudentService {
         System.out.println("We have " + studentRepository.count() + " student(s).");
     }
 
-
-    static class CompositeStudentReposisotry implements StudentRepository {
-
+    static class CompositeRepository implements StudentRepository
+    {
         private final List<StudentRepository> studentRepositories;
 
-        CompositeStudentReposisotry(List<StudentRepository> studentRepositories) {
+        public CompositeRepository(List<StudentRepository> studentRepositories) {
             this.studentRepositories = studentRepositories;
         }
 
@@ -66,9 +63,7 @@ public class StudentServiceImpl implements StudentService {
 
         @Override
         public int count() {
-            return studentRepositories.
-                    stream().
-                    mapToInt(StudentRepository::count).sum();
+            return studentRepositories.stream().mapToInt(StudentRepository::count).sum();
         }
     }
 }

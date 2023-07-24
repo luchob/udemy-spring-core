@@ -6,12 +6,10 @@
 
     <context:annotation-config/>
 
-    <bean id="fileStudentRepository"
+    <bean id="fileRepo"
           class="eu.balev.student.repository.FileStudentRepository"/>
 
-
-    <bean id="inMemoryStudentRepository"
-          primary="true"
+    <bean id="inMemoryRepo"
           class="eu.balev.student.repository.InMemoryStudentRepository"/>
 
     <bean id="studentService"
