@@ -14,22 +14,21 @@ import org.springframework.context.annotation.Primary;
 public class AppConfig {
 
     @Bean(
-            name = "fileRepo"
+       name = "fileRepo"
     )
-    StudentRepository fileStudentRepository() {
+    public StudentRepository fileStudentRepository() {
         return new FileStudentRepository();
     }
 
     @Bean(
             name = "inMemoryRepo"
     )
-    StudentRepository inMemoryStudentRepository() {
+    public StudentRepository inMemoryStudentRepository() {
         return new InMemoryStudentRepository();
     }
 
     @Bean
-    StudentService studentService(
-            @Qualifier("inMemoryRepo") StudentRepository studentRepository) {
+    public StudentService studentService(@Qualifier("fileRepo") StudentRepository studentRepository) {
         return new StudentServiceImpl(studentRepository);
     }
 }
