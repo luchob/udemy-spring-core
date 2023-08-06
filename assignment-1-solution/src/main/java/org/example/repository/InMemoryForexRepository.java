@@ -15,23 +15,13 @@ import java.util.function.Supplier;
 @Repository
 public class InMemoryForexRepository extends ForexRepositoryBase {
 
-    private final Supplier<String> baseCurrencySupplier;
-    private final List<ExRate> exRates = new ArrayList<>();
-
     public InMemoryForexRepository(@Qualifier("baseCurrency") Supplier<String> baseCurrencySupplier) {
-        this.baseCurrencySupplier = baseCurrencySupplier;
+        super(baseCurrencySupplier);
     }
 
-    @Override
-    public Optional<ExRate> findExchangeRate(String currencyCode) {
-        return exRates
-                .stream()
-                .filter(exRate -> Objects.equals(exRate.currencyCode(), currencyCode))
-                .findAny();
-    }
-
+    @PostConstruct
     void init() {
-        exRates.addAll(
+        addExRates(
                 List.of(
                         asExRate("KRW", "18.7332"),
                         asExRate("MYR", "5.0736"),
@@ -40,14 +30,11 @@ public class InMemoryForexRepository extends ForexRepositoryBase {
                         asExRate("SGD", "1.4762"),
                         asExRate("THB", "38.159"),
                         asExRate("ZAR", "19.7927"),
-                        asExRate("BGN", "1.9558"),
-                        asExRate(baseCurrencySupplier.get(), "1")
+                        asExRate("BGN", "1.9558")
                 )
         );
-    }
 
-    private ExRate asExRate(String currency, String rate) {
-        return new ExRate(currency, new BigDecimal(rate).setScale(5, RoundingMode.CEILING));
-    }
+        addBaseRate();
 
+    }
 }

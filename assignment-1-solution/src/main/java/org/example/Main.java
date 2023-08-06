@@ -5,7 +5,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.function.Supplier;
 
 public class Main {
