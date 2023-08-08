@@ -13,15 +13,15 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // TODO: This code is very bad. We will need a service here, won't we?
+        // TODO: This code is very ugly. We will need a service here, won't we?
         String sourceCurrency = args[0];
         String targetCurrency = args[1];
         String baseCurrency = baseCurrncySupplier.get();
         BigDecimal amount = new BigDecimal(args[2]);
 
-        // TODO: These utilities should be located into the service class
         CsvForexCalc csvForexCalc = new CsvForexCalc();
         InMemoryForexCalc inMemoryForexCalc = new InMemoryForexCalc();
+        // TODO: What about unlimited amount of exrate calculators/repositories?
         BigDecimal result =  null;
 
         if (!csvForexCalc.isSupported(sourceCurrency, targetCurrency) &&

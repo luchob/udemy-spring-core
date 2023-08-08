@@ -14,15 +14,17 @@ import java.util.stream.Collectors;
 
 public class CsvForexCalc implements ForexCalc {
 
-    // TODO: seems ideal candidate for extraction
+    // TODO: seems a good candidate for extraction
     private final Supplier<String> baseCurrncySupplier = () -> "EUR";
 
+    // TODO: Maybe extract the storage and retrieval of exrates to a repository
     private final List<ExRate> exRates = new ArrayList<>();
     private final Set<String> supportedCurrencies;
 
 
     public CsvForexCalc() {
 
+        // TODO: maybe postconstruct?
         exRates.addAll(new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream("currencies.csv")))
                         .lines()
                         .map(this::asExRate)
@@ -49,6 +51,7 @@ public class CsvForexCalc implements ForexCalc {
     }
 
     private ExRate findOrThrow(String currencyCode) {
+        // TODO: DRY Principle?
         return exRates
                 .stream()
                 .filter(exRate -> exRate.currencyCode().equals(currencyCode))

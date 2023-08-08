@@ -11,10 +11,11 @@ public class InMemoryForexCalc implements ForexCalc {
 
     private final Supplier<String> baseCurrencySupplier = () -> "EUR";;
 
+    // TODO: Why not extract these into a repository?
     private final List<ExRate> exRates;
 
     public InMemoryForexCalc() {
-
+        // TODO: Maybe a postconstruct?
         exRates = List.of(
                 asRate("KRW", "18.7332"),
                 asRate("MYR", "5.0736"),
@@ -23,7 +24,7 @@ public class InMemoryForexCalc implements ForexCalc {
                 asRate("SGD", "1.4762"),
                 asRate("THB", "38.159"),
                 asRate("ZAR", "19.7927"),
-                asRate("BGN", "1.9558"),
+                asRate("BGN", "1.9558"),//e.g. 1 EUR is 1.9558 BGN
                 asRate(baseCurrencySupplier.get(), "1"));
     }
 
@@ -51,6 +52,7 @@ public class InMemoryForexCalc implements ForexCalc {
     }
 
     private ExRate findOrThrow(String currencyCode) {
+        // TODO: DRY principle?
         return exRates
                 .stream()
                 .filter(exRate -> exRate.currencyCode().equals(currencyCode))

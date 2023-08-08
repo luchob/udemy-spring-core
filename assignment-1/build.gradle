@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    // TODO: dependency to the Spring IoC container
+    // TODO: dependency to the Spring IoC container, JSR250, others?
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
