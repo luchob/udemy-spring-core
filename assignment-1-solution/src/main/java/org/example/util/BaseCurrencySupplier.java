@@ -1,11 +1,10 @@
 package org.example.util;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Supplier;
 
-@Component("baseCurrency")
+@Component("baseCurrencySupplier")
 public class BaseCurrencySupplier implements Supplier<String> {
     @Override
     public String get() {

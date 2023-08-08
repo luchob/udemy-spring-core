@@ -4,8 +4,7 @@ import org.example.model.ExRate;
 
 import java.util.Optional;
 
-public interface ForexRepository {
+public interface ExRateRepository {
 
-    Optional<ExRate> findExchangeRate(String currencyCode);
-
+    Optional<ExRate> findExRate(String currencyCode);
 }
