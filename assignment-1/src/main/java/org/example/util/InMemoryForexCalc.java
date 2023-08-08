@@ -29,19 +29,20 @@ public class InMemoryForexCalc implements ForexCalc {
     }
 
     @Override
-    public boolean isSupported(String src, String dst) {
+    public boolean isSupported(String srcCurrency, String dstCurrency) {
         Set<String> allCodes = exRates
                 .stream()
                 .map(ExRate::currencyCode)
                 .collect(Collectors.toSet());
 
-        return allCodes.contains(src) && allCodes.contains(dst);
+        return allCodes.contains(srcCurrency) && allCodes.contains(dstCurrency);
     }
 
     @Override
-    public BigDecimal convert(String src, BigDecimal amount, String dst) {
-        var srcExRate = findOrThrow(src).rate();
-        var dstExRate = findOrThrow(dst).rate();
+    public BigDecimal convert(String srcCurrency, BigDecimal amount, String dstCurrency) {
+        // TODO: DRY principle?
+        var srcExRate = findOrThrow(srcCurrency).rate();
+        var dstExRate = findOrThrow(dstCurrency).rate();
 
         return dstExRate.divide(srcExRate, RoundingMode.CEILING).multiply(amount);
     }
@@ -52,7 +53,7 @@ public class InMemoryForexCalc implements ForexCalc {
     }
 
     private ExRate findOrThrow(String currencyCode) {
-        // TODO: DRY principle?
+        // TODO: DRY Principle or do we need it at all?
         return exRates
                 .stream()
                 .filter(exRate -> exRate.currencyCode().equals(currencyCode))

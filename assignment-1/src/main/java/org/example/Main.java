@@ -9,6 +9,7 @@ import java.util.function.Supplier;
 
 public class Main {
 
+    // TODO: Extract as a managed bean?
     private static Supplier<String> baseCurrncySupplier = () -> "EUR";
 
     public static void main(String[] args) {

@@ -36,22 +36,22 @@ public class CsvForexCalc implements ForexCalc {
     }
 
     @Override
-    public boolean isSupported(String src, String dst) {
-        return supportedCurrencies.contains(src) &&
-                supportedCurrencies.contains(dst);
+    public boolean isSupported(String srcCurrency, String dstCurrency) {
+        return supportedCurrencies.contains(srcCurrency) &&
+                supportedCurrencies.contains(dstCurrency);
     }
 
     @Override
-    public BigDecimal convert(String src, BigDecimal srcAmount, String dst) {
+    public BigDecimal convert(String srcCurrency, BigDecimal srcAmount, String dstCurrency) {
 
-        var srcExRate = findOrThrow(src).rate();
-        var dstExRate = findOrThrow(dst).rate();
+        var srcExRate = findOrThrow(srcCurrency).rate();
+        var dstExRate = findOrThrow(dstCurrency).rate();
 
         return dstExRate.divide(srcExRate, RoundingMode.CEILING).multiply(srcAmount);
     }
 
     private ExRate findOrThrow(String currencyCode) {
-        // TODO: DRY Principle?
+        // TODO: DRY Principle or do we need it at all?
         return exRates
                 .stream()
                 .filter(exRate -> exRate.currencyCode().equals(currencyCode))
