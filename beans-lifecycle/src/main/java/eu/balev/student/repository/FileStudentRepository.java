@@ -12,6 +12,11 @@ import java.util.List;
 
 @Repository("fileRepo")
 public class FileStudentRepository implements StudentRepository {
+
+    public FileStudentRepository() {
+        System.out.println("FileStudentRepository is created.");
+    }
+
     @Override
     public List<Student> getAllStudents() {
         return
@@ -33,17 +38,13 @@ public class FileStudentRepository implements StudentRepository {
         return getAllStudents().size();
     }
 
-    @PreDestroy
-    public void destroy() {
-        System.out.println("Finalizing the file-based repo with " +
-                count() +
-                " students.");
+    @PostConstruct
+    void init() {
+        System.out.println("FileStudentRepository is initialized with " + count() + " students.");
     }
 
-    @PostConstruct
-    public void init() throws Exception {
-        System.out.println("Initializing the file-based repo with " +
-                count() +
-                " students.");
+    @PreDestroy
+    void destroy() {
+        System.out.println("FileStudentRepository is destroyed.");
     }
 }

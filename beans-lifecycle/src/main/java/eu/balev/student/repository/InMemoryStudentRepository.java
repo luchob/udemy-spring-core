@@ -16,6 +16,10 @@ public class InMemoryStudentRepository implements StudentRepository, Initializin
             new Student("Lachezar Balev Fake", LocalDate.of(1979, 3, 7))
     );
 
+    public InMemoryStudentRepository() {
+        System.out.println("InMemoryStudentRepository is created.");
+    }
+
     @Override
     public List<Student> getAllStudents() {
         return students;
@@ -28,15 +32,11 @@ public class InMemoryStudentRepository implements StudentRepository, Initializin
 
     @Override
     public void destroy() {
-        System.out.println("Finalizing the in-memory repo with " +
-                count() +
-                " students.");
+        System.out.println("InMemoryStudentRepository is destroyed.");
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
-        System.out.println("Initializing the in-memory repo with " +
-                count() +
-                " students.");
+    public void afterPropertiesSet() {
+        System.out.println("InMemoryStudentRepository is initialized with " + count() + " students.");
     }
 }

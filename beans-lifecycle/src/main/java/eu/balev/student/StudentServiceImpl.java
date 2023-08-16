@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class StudentServiceImpl implements StudentService, SmartLifecycle {
+public class StudentServiceImpl implements StudentService {
 
     private boolean running = false;
     private final StudentRepository studentRepository;
@@ -45,22 +45,5 @@ public class StudentServiceImpl implements StudentService, SmartLifecycle {
     @Override
     public void init() {
         System.out.println("We have " + studentRepository.count() + " student(s).");
-    }
-
-    @Override
-    public void start() {
-        running = true;
-        System.out.println("Starting the service...");
-    }
-
-    @Override
-    public void stop() {
-        running = false;
-        System.out.println("Stopping the service...");
-    }
-
-    @Override
-    public boolean isRunning() {
-        return running;
     }
 }
