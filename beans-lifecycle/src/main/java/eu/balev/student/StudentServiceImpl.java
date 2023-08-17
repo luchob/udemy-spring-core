@@ -2,9 +2,7 @@ package eu.balev.student;
 
 import eu.balev.student.model.Student;
 import eu.balev.student.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.Lifecycle;
-import org.springframework.context.SmartLifecycle;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -42,7 +40,17 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @PostConstruct
     public void init() {
-        System.out.println("We have " + studentRepositories.stream().mapToInt(StudentRepository::count).sum() + " student(s).");
+
+        int totalStudents = 0;
+
+        for (StudentRepository studentRepository : studentRepositories) {
+           int studentCnt = studentRepository.count();
+           totalStudents+=studentCnt;
+            System.out.println("We have " + studentCnt + " students in " + studentRepository.getName() + " repository.");
+        }
+
+        System.out.println("We have totally " + totalStudents + " student(s).");
     }
 }
