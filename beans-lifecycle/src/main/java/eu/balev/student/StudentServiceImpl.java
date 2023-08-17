@@ -9,24 +9,23 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
+    private final List<StudentRepository> studentRepositories;
 
-    private boolean running = false;
-    private final StudentRepository studentRepository;
-
-    public StudentServiceImpl(@Qualifier("inMemoryRepo") StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    public StudentServiceImpl(List<StudentRepository> studentRepositories) {
+        this.studentRepositories = studentRepositories;
     }
 
     @Override
     public Set<Student> findYoungestStudents() {
-        var sorted =  studentRepository
-                .getAllStudents()
+        var sorted =  studentRepositories
                 .stream()
+                .flatMap(r -> r.getAllStudents().stream())
                 .sorted(Comparator.comparing(Student::birthDay).reversed())
                 .toList();
 
@@ -44,6 +43,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void init() {
-        System.out.println("We have " + studentRepository.count() + " student(s).");
+        System.out.println("We have " + studentRepositories.stream().mapToInt(StudentRepository::count).sum() + " student(s).");
     }
 }

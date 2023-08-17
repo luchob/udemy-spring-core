@@ -1,5 +1,6 @@
 package eu.balev;
 
+import eu.balev.student.StudentService;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
