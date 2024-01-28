@@ -12,8 +12,6 @@ import java.util.stream.Collectors;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
-
-    @Autowired
     public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
@@ -40,6 +38,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void init() {
-        System.out.println("We have " + studentRepository.count() + " student(s).");
+        System.out.println("The service manages " + studentRepository.count() + " students.");
     }
 }

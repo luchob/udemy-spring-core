@@ -7,5 +7,5 @@ import java.util.List;
 public interface StudentRepository {
     List<Student> getAllStudents();
 
-    int count();
+    long count();
 }

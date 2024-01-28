@@ -17,8 +17,9 @@ public class InMemoryStudentRepository implements StudentRepository {
         return students;
     }
 
+
     @Override
-    public int count() {
+    public long count() {
         return getAllStudents().size();
     }
 }
