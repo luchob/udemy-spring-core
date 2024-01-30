@@ -1,11 +1,9 @@
 package eu.balev.student.repository;
 
 import eu.balev.student.model.Student;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.context.annotation.Primary;
 
 public class InMemoryStudentRepository implements StudentRepository {
     private final List<Student> students = List.of(
@@ -19,8 +17,9 @@ public class InMemoryStudentRepository implements StudentRepository {
         return students;
     }
 
+
     @Override
-    public int count() {
+    public long count() {
         return getAllStudents().size();
     }
 }
