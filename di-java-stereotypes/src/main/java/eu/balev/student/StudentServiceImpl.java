@@ -3,23 +3,44 @@ package eu.balev.student;
 import eu.balev.student.model.Student;
 import eu.balev.student.repository.StudentRepository;
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 @Service
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
+    private final String initMessage;
 
-    public StudentServiceImpl(@Qualifier("inMemoryRepo") StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    public StudentServiceImpl(List<StudentRepository> studentRepositories,
+        @Value("${init.message}") String initMessage) {
+        this.studentRepository = new CompositeStudentRepository(studentRepositories);
+        this.initMessage = initMessage;
     }
+
+    private record CompositeStudentRepository(
+        List<StudentRepository> studentRepositories) implements StudentRepository {
+
+        @Override
+            public List<Student> getAllStudents() {
+                return studentRepositories.stream()
+                    .flatMap(r -> r.getAllStudents().stream())
+                    .collect(Collectors.toList());
+            }
+
+            @Override
+            public long count() {
+                return studentRepositories
+                    .stream()
+                    .mapToLong(StudentRepository::count)
+                    .sum();
+            }
+        }
 
     @Override
     public Set<Student> findYoungestStudents() {
@@ -44,6 +65,6 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @PostConstruct
     public void init() {
-        System.out.println("We have " + studentRepository.count() + " student(s).");
+        System.out.printf((initMessage) + "%n", studentRepository.count());
     }
 }
