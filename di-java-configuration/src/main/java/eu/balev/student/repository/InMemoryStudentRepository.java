@@ -1,7 +1,6 @@
 package eu.balev.student.repository;
 
 import eu.balev.student.model.Student;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,8 +16,9 @@ public class InMemoryStudentRepository implements StudentRepository {
         return students;
     }
 
+
     @Override
-    public int count() {
+    public long count() {
         return getAllStudents().size();
     }
 }
