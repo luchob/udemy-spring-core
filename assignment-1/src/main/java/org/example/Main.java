@@ -14,11 +14,12 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // TODO: This code is very ugly. We will need a service here, won't we?
         String sourceCurrency = args[0];
         String targetCurrency = args[1];
-        String baseCurrency = baseCurrncySupplier.get();
         BigDecimal amount = new BigDecimal(args[2]);
+
+        // TODO: This code is very ugly. We will need a service here, won't we?
+        String baseCurrency = baseCurrncySupplier.get();
 
         CsvForexCalc csvForexCalc = new CsvForexCalc();
         InMemoryForexCalc inMemoryForexCalc = new InMemoryForexCalc();
@@ -52,6 +53,9 @@ public class Main {
                 System.out.println("Cannot convert target to base...");
                 return;
             }
+
+            // src/base=X, target/base=Y
+            // src/taget=X/Y
 
             result = srcToBase.divide(dstToBase, RoundingMode.CEILING).multiply(amount);
 
