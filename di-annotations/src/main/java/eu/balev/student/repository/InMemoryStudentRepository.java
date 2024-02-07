@@ -3,7 +3,6 @@ package eu.balev.student.repository;
 import eu.balev.student.model.Student;
 import java.time.LocalDate;
 import java.util.List;
-import org.springframework.context.annotation.Primary;
 
 public class InMemoryStudentRepository implements StudentRepository {
     private final List<Student> students = List.of(

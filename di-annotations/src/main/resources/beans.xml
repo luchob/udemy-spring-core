@@ -7,18 +7,13 @@
     <context:annotation-config></context:annotation-config>
 
     <bean
-      id="inMemoryStudentRepository"
-      class="eu.balev.student.repository.InMemoryStudentRepository">
-    </bean>
-
-    <bean
       id="fileStudentRepository"
       class="eu.balev.student.repository.FileStudentRepository">
     </bean>
 
     <bean
-      id="appConfig"
-      class="eu.balev.student.config.AppConfig">
+      id="inMemoryStudentRepository"
+      class="eu.balev.student.repository.InMemoryStudentRepository">
     </bean>
 
     <bean
