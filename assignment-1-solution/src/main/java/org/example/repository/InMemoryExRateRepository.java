@@ -1,33 +1,36 @@
 package org.example.repository;
 
-import jakarta.annotation.PostConstruct;
-import org.example.model.ExRate;
-import org.springframework.stereotype.Repository;
+import static org.example.util.BaseCurrencySupplier.BASE_CURRENCY_SUPPLIER;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import jakarta.annotation.PostConstruct;
 import java.util.List;
 import java.util.function.Supplier;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
 @Repository
-public class InMemoryExRateRepository extends BaseExRateRepository {
-    public InMemoryExRateRepository(Supplier<String> baseCurrencySupplier) {
-        super(baseCurrencySupplier);
-    }
-    
-    @PostConstruct
-    void init() {
-        addExRates(List.of(
-                asRate("KRW", "18.7332"),
-                asRate("MYR", "5.0736"),
-                asRate("NZD", "1.7888"),
-                asRate("PHP", "60.590"),
-                asRate("SGD", "1.4762"),
-                asRate("THB", "38.159"),
-                asRate("ZAR", "19.7927"),
-                asRate("BGN", "1.9558")//e.g. 1 EUR is 1.9558 BGN
-                )
-        );
-        addBaseRate();
-    }
+public class InMemoryExRateRepository extends ExRateRepositoryBase {
+
+  public InMemoryExRateRepository(
+      @Qualifier(BASE_CURRENCY_SUPPLIER) Supplier<String> baseCurrencySupplier) {
+    super(baseCurrencySupplier);
+  }
+
+  @PostConstruct
+  void init() {
+
+    super.addExRates(
+        List.of(
+            asExRate("KRW", "18.7332"),
+            asExRate("MYR", "5.0736"),
+            asExRate("NZD", "1.7888"),
+            asExRate("PHP", "60.590"),
+            asExRate("SGD", "1.4762"),
+            asExRate("THB", "38.159"),
+            asExRate("ZAR", "19.7927"),
+            asExRate("BGN", "1.9558")
+        ));
+
+    super.addBaseCurrencyRate();
+  }
 }

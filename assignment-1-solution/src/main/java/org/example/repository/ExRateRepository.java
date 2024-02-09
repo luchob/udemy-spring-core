@@ -1,10 +1,10 @@
 package org.example.repository;
 
-import org.example.model.ExRate;
-
 import java.util.Optional;
+import org.example.model.ExRate;
 
 public interface ExRateRepository {
 
-    Optional<ExRate> findExRate(String currencyCode);
+  Optional<ExRate> findExRate(String currency);
+
 }
