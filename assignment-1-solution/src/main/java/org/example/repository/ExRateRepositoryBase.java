@@ -40,11 +40,6 @@ public class ExRateRepositoryBase implements ExRateRepository {
 
   protected ExRate asExRate(String s) {
     var line = s.split(",");
-    return asExRate(line[0].trim(), line[1].trim());
+    return ExRate.asExRate(line[0].trim(), line[1].trim());
   }
-  protected static ExRate asExRate(String currencyCode, String exRate) {
-    // leave the new operators
-    return new ExRate(currencyCode, new BigDecimal(exRate).setScale(5, RoundingMode.CEILING));
-  }
-
 }
