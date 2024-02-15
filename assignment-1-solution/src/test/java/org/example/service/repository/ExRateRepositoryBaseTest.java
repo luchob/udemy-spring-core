@@ -35,7 +35,7 @@ public class ExRateRepositoryBaseTest {
 
   @ParameterizedTest(name = "Currency, expected rate: [{0}], [{1}]")
   @MethodSource("convertSource")
-  void findExRate(
+  void testFindExRate(
       String currency,
       BigDecimal expected
   ) {
