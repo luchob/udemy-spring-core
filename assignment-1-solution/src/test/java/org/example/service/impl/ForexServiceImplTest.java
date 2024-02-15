@@ -75,18 +75,18 @@ public class ForexServiceImplTest {
   private static Stream<Arguments> convertSource() {
     return Stream.of(
 
-        Arguments.of(DUD.name(), db(2), SPD.name(), db(0.5)),
-        Arguments.of(DUD.name(), db(2), GGD.name(), db(1)),
-        Arguments.of(DUD.name(), db(2), UDD.name(), db(4)),
-        Arguments.of(UDD.name(), db(8), SPD.name(), db(1))
+        Arguments.of(DUD.name(), bd(2), SPD.name(), bd(0.5)),
+        Arguments.of(DUD.name(), bd(2), GGD.name(), bd(1)),
+        Arguments.of(DUD.name(), bd(2), UDD.name(), bd(4)),
+        Arguments.of(UDD.name(), bd(8), SPD.name(), bd(1))
         // think of more use cases
     );
   }
 
-  private static BigDecimal db(int val) {
+  private static BigDecimal bd(int val) {
     return new BigDecimal(val).setScale(5, RoundingMode.CEILING);
   }
-  private static BigDecimal db(double val) {
+  private static BigDecimal bd(double val) {
     return new BigDecimal(val).setScale(5, RoundingMode.CEILING);
   }
 
