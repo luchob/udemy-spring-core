@@ -8,6 +8,4 @@ public interface StudentRepository {
     List<Student> getAllStudents();
 
     int count();
-
-    String getName();
 }

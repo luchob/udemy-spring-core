@@ -3,6 +3,7 @@ package eu.balev.student;
 import eu.balev.student.model.Student;
 import eu.balev.student.repository.StudentRepository;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ public class StudentServiceImpl implements StudentService {
     private final List<StudentRepository> studentRepositories;
 
     public StudentServiceImpl(List<StudentRepository> studentRepositories) {
+        System.out.println("StudentServiceImpl is created");
         this.studentRepositories = studentRepositories;
     }
 
@@ -48,9 +50,13 @@ public class StudentServiceImpl implements StudentService {
         for (StudentRepository studentRepository : studentRepositories) {
            int studentCnt = studentRepository.count();
            totalStudents+=studentCnt;
-            System.out.println("We have " + studentCnt + " students in " + studentRepository.getName() + " repository.");
         }
 
         System.out.println("We have totally " + totalStudents + " student(s).");
+    }
+
+    @PreDestroy
+    public void destroy() {
+        System.out.println("StudentServiceImpl destroyed.");
     }
 }
