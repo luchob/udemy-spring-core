@@ -45,11 +45,14 @@ public class StudentServiceImpl implements StudentService {
     @PostConstruct
     public void init() {
 
+        System.out.println("In the init method of the student service.");
+
         int totalStudents = 0;
 
         for (StudentRepository studentRepository : studentRepositories) {
            int studentCnt = studentRepository.count();
            totalStudents+=studentCnt;
+            System.out.println("The " + studentRepository.getName() + " manages " + studentCnt + "students");
         }
 
         System.out.println("We have totally " + totalStudents + " student(s).");
