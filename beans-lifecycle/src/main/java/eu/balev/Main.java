@@ -1,5 +1,6 @@
 package eu.balev;
 
+import eu.balev.student.repository.StudentRepository;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -8,5 +9,8 @@ public class Main {
         ConfigurableApplicationContext ctx = new AnnotationConfigApplicationContext("eu.balev");
 
         ctx.registerShutdownHook();
+
+        var studentRepo = ctx.getBean("fileRepo", StudentRepository.class);
+        studentRepo.getAllStudents();
     }
 }
