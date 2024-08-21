@@ -2,8 +2,8 @@ package eu.balev.student;
 
 import eu.balev.student.model.Student;
 import eu.balev.student.repository.StudentRepository;
-import jakarta.inject.Inject;
 
+import jakarta.inject.Inject;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Set;
