@@ -13,7 +13,7 @@ public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
 
-    public StudentServiceImpl(@Qualifier("inMemoryStudentRepository") StudentRepository studentRepository) {
+    public StudentServiceImpl(@Qualifier("fileStudentRepository") StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
