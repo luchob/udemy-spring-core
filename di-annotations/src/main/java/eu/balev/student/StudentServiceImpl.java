@@ -2,19 +2,45 @@ package eu.balev.student;
 
 import eu.balev.student.model.Student;
 import eu.balev.student.repository.StudentRepository;
+import jakarta.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
+    private final String message;
 
-    public StudentServiceImpl(@Qualifier("fileStudentRepository") StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    public StudentServiceImpl(List<StudentRepository> studentRepositories,
+        @Value("${init.message}") String message) {
+        this.studentRepository = new CompositeStudentRepository(studentRepositories);
+        this.message = message;
+    }
+
+    static class CompositeStudentRepository implements StudentRepository {
+
+        private final List<StudentRepository> studentRepositories;
+
+        public CompositeStudentRepository(List<StudentRepository> studentRepositories) {
+            this.studentRepositories = studentRepositories;
+        }
+
+        @Override
+        public List<Student> getAllStudents() {
+            return studentRepositories
+                .stream()
+                .flatMap(sr -> sr.getAllStudents().stream())
+                .collect(Collectors.toList());
+        }
+
+        @Override
+        public long count() {
+            return studentRepositories.stream().mapToLong(StudentRepository::count).sum();
+        }
     }
 
     @Override
@@ -38,7 +64,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @PostConstruct
     public void init() {
-        System.out.println("The service manages " + studentRepository.count() + " students.");
+        System.out.printf(message, studentRepository.count());
     }
 }

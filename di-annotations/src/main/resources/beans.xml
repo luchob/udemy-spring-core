@@ -9,6 +9,11 @@
     </context:annotation-config>
 
     <bean
+      id="appConfig"
+      class="eu.balev.student.config.AppConfig">
+    </bean>
+
+    <bean
       id="fileStudentRepository"
       class="eu.balev.student.repository.FileStudentRepository">
     </bean>
