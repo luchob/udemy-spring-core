@@ -26,11 +26,11 @@ public class AppConfig {
   }
 
   @Bean
-  public StudentService studentService(List<StudentRepository> studentRepositories,
+  public StudentService studentService(
+      List<StudentRepository> studentRepositories,
       @Value("${init.message}") String initMessage) {
-    return new StudentServiceImpl(
-        studentRepositories,
-        initMessage
-    );
+    return new StudentServiceImpl(studentRepositories,
+        initMessage);
   }
+
 }

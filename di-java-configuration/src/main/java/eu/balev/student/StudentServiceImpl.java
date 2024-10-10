@@ -13,32 +13,35 @@ import org.springframework.beans.factory.annotation.Value;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
-    private final String initMessage;
+    private final String message;
 
     public StudentServiceImpl(List<StudentRepository> studentRepositories,
-        @Value("${init.message}") String initMessage) {
+        String initMessage) {
         this.studentRepository = new CompositeStudentRepository(studentRepositories);
-        this.initMessage = initMessage;
+        this.message = initMessage;
     }
 
-    private record CompositeStudentRepository(
-        List<StudentRepository> studentRepositories) implements StudentRepository {
+    static class CompositeStudentRepository implements StudentRepository {
+
+        private final List<StudentRepository> studentRepositories;
+
+        public CompositeStudentRepository(List<StudentRepository> studentRepositories) {
+            this.studentRepositories = studentRepositories;
+        }
 
         @Override
-            public List<Student> getAllStudents() {
-                return studentRepositories.stream()
-                    .flatMap(r -> r.getAllStudents().stream())
-                    .collect(Collectors.toList());
-            }
-
-            @Override
-            public long count() {
-                return studentRepositories
-                    .stream()
-                    .mapToLong(StudentRepository::count)
-                    .sum();
-            }
+        public List<Student> getAllStudents() {
+            return studentRepositories
+                .stream()
+                .flatMap(sr -> sr.getAllStudents().stream())
+                .collect(Collectors.toList());
         }
+
+        @Override
+        public long count() {
+            return studentRepositories.stream().mapToLong(StudentRepository::count).sum();
+        }
+    }
 
     @Override
     public Set<Student> findYoungestStudents() {
@@ -63,6 +66,6 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @PostConstruct
     public void init() {
-        System.out.printf((initMessage) + "%n", studentRepository.count());
+        System.out.printf(message, studentRepository.count());
     }
 }
