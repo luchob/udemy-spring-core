@@ -5,7 +5,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class FileStudentRepository implements StudentRepository {
     @Override
     public List<Student> getAllStudents() {
