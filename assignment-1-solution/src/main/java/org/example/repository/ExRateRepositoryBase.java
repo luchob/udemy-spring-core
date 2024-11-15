@@ -18,7 +18,7 @@ public class ExRateRepositoryBase implements ExRateRepository {
   private final List<ExRate> exRates = new ArrayList<>();
   private final Supplier<String> baseCurrencySupplier;
 
-  public ExRateRepositoryBase(@Qualifier(BASE_CURRENCY_SUPPLIER) Supplier<String> baseCurrencySupplier) {
+  public ExRateRepositoryBase(Supplier<String> baseCurrencySupplier) {
     this.baseCurrencySupplier = baseCurrencySupplier;
   }
 
