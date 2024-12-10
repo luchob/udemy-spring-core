@@ -4,28 +4,36 @@ import eu.balev.student.model.Student;
 import eu.balev.student.repository.StudentRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDate;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 @Service
-public class StudentServiceImpl implements StudentService {
-    private final List<StudentRepository> studentRepositories;
+public class StudentServiceImpl implements StudentService, InitializingBean, DisposableBean {
 
-    public StudentServiceImpl(List<StudentRepository> studentRepositories) {
-        System.out.println("StudentServiceImpl is created");
-        this.studentRepositories = studentRepositories;
+    private final String initMessage;
+
+    private final StudentRepository studentRepository;
+
+    public StudentServiceImpl(
+        @Value("${init.message}") String initMessage,
+        @Qualifier("fileStudentRepository") StudentRepository studentRepository) {
+        System.out.println("INSTANTIATION");
+        this.initMessage = initMessage;
+        this.studentRepository = studentRepository;
     }
 
     @Override
     public Set<Student> findYoungestStudents() {
-        var sorted =  studentRepositories
+        var sorted = studentRepository
+                .getAllStudents()
                 .stream()
-                .flatMap(r -> r.getAllStudents().stream())
                 .sorted(Comparator.comparing(Student::birthDay).reversed())
                 .toList();
 
@@ -42,24 +50,19 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    @PostConstruct
+    //@PostConstruct
     public void init() {
 
-        System.out.println("In the init method of the student service.");
-
-        int totalStudents = 0;
-
-        for (StudentRepository studentRepository : studentRepositories) {
-           int studentCnt = studentRepository.count();
-           totalStudents+=studentCnt;
-            System.out.println("The " + studentRepository.getName() + " manages " + studentCnt + "students");
-        }
-
-        System.out.println("We have totally " + totalStudents + " student(s).");
     }
 
     @PreDestroy
+    @Override
     public void destroy() {
-        System.out.println("StudentServiceImpl destroyed.");
+        System.out.println("Bye from student service, shutting down!");
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.printf((initMessage) + "%n", studentRepository.count());
     }
 }
