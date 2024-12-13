@@ -4,21 +4,26 @@ import eu.balev.student.model.Student;
 import eu.balev.student.repository.StudentRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ResourceLoaderAware;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
-@Service
-public class StudentServiceImpl implements StudentService, InitializingBean, DisposableBean {
+@Service("myStudentService")
+public class StudentServiceImpl implements StudentService,
+    ResourceLoaderAware, BeanNameAware {
 
+    private String beanName;
     private final String initMessage;
-
     private final StudentRepository studentRepository;
 
     public StudentServiceImpl(
@@ -50,19 +55,34 @@ public class StudentServiceImpl implements StudentService, InitializingBean, Dis
     }
 
     @Override
-    //@PostConstruct
+    @PostConstruct
     public void init() {
-
+        System.out.printf((initMessage) + "%n",
+            beanName,
+            studentRepository.count());
     }
 
     @PreDestroy
     @Override
     public void destroy() {
-        System.out.println("Bye from student service, shutting down!");
+        System.out.printf("Bye from %s, shutting down!%n",
+            beanName);
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
-        System.out.printf((initMessage) + "%n", studentRepository.count());
+    public void setResourceLoader(ResourceLoader resourceLoader) {
+        Resource bannerResource = resourceLoader.getResource("classpath:banner.txt");
+
+      try {
+        String banner = bannerResource.getContentAsString(StandardCharsets.UTF_8);
+          System.out.println(banner);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    }
+
+    @Override
+    public void setBeanName(String beanName) {
+        this.beanName = beanName;
     }
 }
