@@ -15,6 +15,10 @@ public class Main {
 
         StudentService studentService = ctx.getBean(StudentService.class);
 
+        studentService.findYoungestStudents();
+        studentService.findYoungestStudents();
+        studentService.findYoungestStudents();
+
         System.out.println(studentService.findYoungestStudents());
     }
 }

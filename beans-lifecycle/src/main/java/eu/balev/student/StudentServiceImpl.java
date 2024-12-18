@@ -28,7 +28,7 @@ public class StudentServiceImpl implements StudentService,
 
     public StudentServiceImpl(
         @Value("${init.message}") String initMessage,
-        @Qualifier("fileStudentRepository") StudentRepository studentRepository) {
+        @Qualifier("inMemoryStudentRepository") StudentRepository studentRepository) {
         System.out.println("INSTANTIATION");
         this.initMessage = initMessage;
         this.studentRepository = studentRepository;
