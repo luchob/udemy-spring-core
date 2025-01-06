@@ -1,16 +1,24 @@
 package eu.balev;
 
-import eu.balev.student.repository.StudentRepository;
+import eu.balev.student.StudentService;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
     public static void main(String[] args) {
-        ConfigurableApplicationContext ctx = new AnnotationConfigApplicationContext("eu.balev");
+
+        ConfigurableApplicationContext ctx = new AnnotationConfigApplicationContext(
+            "eu.balev"
+        );
 
         ctx.registerShutdownHook();
 
-        var studentRepo = ctx.getBean("fileRepo", StudentRepository.class);
-        studentRepo.getAllStudents();
+        StudentService studentService = ctx.getBean(StudentService.class);
+
+        studentService.findYoungestStudents();
+        studentService.findYoungestStudents();
+        studentService.findYoungestStudents();
+
+        System.out.println(studentService.findYoungestStudents());
     }
 }

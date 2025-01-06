@@ -4,28 +4,41 @@ import eu.balev.student.model.Student;
 import eu.balev.student.repository.StudentRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import org.springframework.stereotype.Service;
-
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ResourceLoaderAware;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Service;
 
-@Service
-public class StudentServiceImpl implements StudentService {
-    private final List<StudentRepository> studentRepositories;
+@Service("myStudentService")
+public class StudentServiceImpl implements StudentService,
+    ResourceLoaderAware, BeanNameAware {
 
-    public StudentServiceImpl(List<StudentRepository> studentRepositories) {
-        System.out.println("StudentServiceImpl is created");
-        this.studentRepositories = studentRepositories;
+    private String beanName;
+    private final String initMessage;
+    private final StudentRepository studentRepository;
+
+    public StudentServiceImpl(
+        @Value("${init.message}") String initMessage,
+        @Qualifier("inMemoryStudentRepository") StudentRepository studentRepository) {
+        System.out.println("INSTANTIATION");
+        this.initMessage = initMessage;
+        this.studentRepository = studentRepository;
     }
 
     @Override
     public Set<Student> findYoungestStudents() {
-        var sorted =  studentRepositories
+        var sorted = studentRepository
+                .getAllStudents()
                 .stream()
-                .flatMap(r -> r.getAllStudents().stream())
                 .sorted(Comparator.comparing(Student::birthDay).reversed())
                 .toList();
 
@@ -44,22 +57,32 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @PostConstruct
     public void init() {
-
-        System.out.println("In the init method of the student service.");
-
-        int totalStudents = 0;
-
-        for (StudentRepository studentRepository : studentRepositories) {
-           int studentCnt = studentRepository.count();
-           totalStudents+=studentCnt;
-            System.out.println("The " + studentRepository.getName() + " manages " + studentCnt + "students");
-        }
-
-        System.out.println("We have totally " + totalStudents + " student(s).");
+        System.out.printf((initMessage) + "%n",
+            beanName,
+            studentRepository.count());
     }
 
     @PreDestroy
+    @Override
     public void destroy() {
-        System.out.println("StudentServiceImpl destroyed.");
+        System.out.printf("Bye from %s, shutting down!%n",
+            beanName);
+    }
+
+    @Override
+    public void setResourceLoader(ResourceLoader resourceLoader) {
+        Resource bannerResource = resourceLoader.getResource("classpath:banner.txt");
+
+      try {
+        String banner = bannerResource.getContentAsString(StandardCharsets.UTF_8);
+          System.out.println(banner);
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    }
+
+    @Override
+    public void setBeanName(String beanName) {
+        this.beanName = beanName;
     }
 }
