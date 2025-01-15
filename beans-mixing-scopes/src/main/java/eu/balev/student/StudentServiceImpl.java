@@ -11,6 +11,7 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.BeanNameAware;
+import org.springframework.beans.factory.annotation.Lookup;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ResourceLoaderAware;
@@ -19,25 +20,22 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 @Service("myStudentService")
-public class StudentServiceImpl implements StudentService,
+public abstract class StudentServiceImpl implements StudentService,
     ResourceLoaderAware, BeanNameAware {
 
     private String beanName;
     private final String initMessage;
-    private final StudentRepository studentRepository;
 
     public StudentServiceImpl(
-        @Value("${init.message}") String initMessage,
-        StudentRepository studentRepository) {
+        @Value("${init.message}") String initMessage) {
         System.out.println("INSTANTIATION");
         this.initMessage = initMessage;
-        this.studentRepository = studentRepository;
     }
 
     @Override
     public Set<Student> findYoungestStudents() {
 
-        var sorted = studentRepository
+        var sorted = getStudentRepository()
                 .getAllStudents()
                 .stream()
                 .sorted(Comparator.comparing(Student::birthDay).reversed())
@@ -60,7 +58,7 @@ public class StudentServiceImpl implements StudentService,
     public void init() {
         System.out.printf((initMessage) + "%n",
             beanName,
-            studentRepository.count());
+            getStudentRepository().count());
     }
 
     @PreDestroy
@@ -86,4 +84,7 @@ public class StudentServiceImpl implements StudentService,
     public void setBeanName(String beanName) {
         this.beanName = beanName;
     }
+
+    @Lookup
+    abstract StudentRepository getStudentRepository();
 }

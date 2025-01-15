@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Primary
-@Scope
+@Scope("prototype")
 public class InMemoryStudentRepository implements StudentRepository {
 
     private int count = 0;
