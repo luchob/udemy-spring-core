@@ -13,10 +13,15 @@ public class Main {
 
         ctx.registerShutdownHook();
 
+        System.out.println("----******");
+
         StudentService studentService = ctx.getBean(StudentService.class);
 
-        System.out.println(studentService.findYoungestStudents());
-        System.out.println(studentService.findYoungestStudents());
+        System.out.println("----******");
+//
+//
+//        System.out.println(studentService.findYoungestStudents());
+//        System.out.println(studentService.findYoungestStudents());
     }
 
 }

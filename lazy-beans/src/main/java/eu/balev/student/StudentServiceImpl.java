@@ -11,8 +11,6 @@ import java.util.Comparator;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.BeanNameAware;
-import org.springframework.beans.factory.annotation.Lookup;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.annotation.Lazy;
@@ -22,14 +20,17 @@ import org.springframework.stereotype.Service;
 
 @Service("myStudentService")
 @Lazy
-public abstract class StudentServiceImpl implements StudentService,
+public class StudentServiceImpl implements StudentService,
     ResourceLoaderAware, BeanNameAware {
 
+    private final StudentRepository studentRepository;
     private String beanName;
     private final String initMessage;
 
     public StudentServiceImpl(
-        @Value("${init.message}") String initMessage) {
+        @Value("${init.message}") String initMessage,
+        StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
         System.out.println("INSTANTIATION");
         this.initMessage = initMessage;
     }
@@ -37,7 +38,7 @@ public abstract class StudentServiceImpl implements StudentService,
     @Override
     public Set<Student> findYoungestStudents() {
 
-        var sorted = getStudentRepository()
+        var sorted = studentRepository
                 .getAllStudents()
                 .stream()
                 .sorted(Comparator.comparing(Student::birthDay).reversed())
@@ -60,7 +61,7 @@ public abstract class StudentServiceImpl implements StudentService,
     public void init() {
         System.out.printf((initMessage) + "%n",
             beanName,
-            getStudentRepository().count());
+            studentRepository.count());
     }
 
     @PreDestroy
@@ -86,7 +87,4 @@ public abstract class StudentServiceImpl implements StudentService,
     public void setBeanName(String beanName) {
         this.beanName = beanName;
     }
-
-    @Lookup
-    abstract StudentRepository getStudentRepository();
 }

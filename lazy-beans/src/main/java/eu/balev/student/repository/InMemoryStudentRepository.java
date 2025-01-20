@@ -5,12 +5,14 @@ import jakarta.annotation.PreDestroy;
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @Primary
+@Lazy
 public class InMemoryStudentRepository implements StudentRepository {
 
     private int count = 0;
