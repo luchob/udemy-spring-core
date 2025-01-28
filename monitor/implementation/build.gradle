@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+}
+
+group = 'eu.balev'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(project(":api"))
+    implementation group: 'org.springframework', name: 'spring-context', version: '6.0.10'
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
