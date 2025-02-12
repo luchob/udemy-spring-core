@@ -1,0 +1,20 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation group: 'org.springframework', name: 'spring-context', version: '6.0.10'
+    implementation group: 'jakarta.annotation', name: 'jakarta.annotation-api', version: '2.1.1'
+}
+
+test {
+    useJUnitPlatform()
+}
