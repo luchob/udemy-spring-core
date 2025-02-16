@@ -7,6 +7,8 @@ import jakarta.annotation.PreDestroy;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,13 +23,26 @@ public class StudentServiceImpl implements StudentService, ResourceLoaderAware {
 
     private final StudentRepository studentRepository;
     private final String initMessage;
+    private final StudentPrinterService studentPrinterService;
+
+    private final static String VCARD_TEMPLATE =
+        """
+            BEGIN:VCARD
+            VERSION:3.0
+            REV:%rev%
+            N:%last_name%;%first_name%;;;
+            BDAY:%bday%
+            END:VCARD
+        """;
 
     public StudentServiceImpl(
         @Value("${init.message}") String initMessage,
-        StudentRepository studentRepository) {
+        StudentRepository studentRepository,
+        StudentPrinterService studentPrinterService) {
 
         this.studentRepository = studentRepository;
         this.initMessage = initMessage;
+        this.studentPrinterService = studentPrinterService;
     }
 
 
@@ -50,6 +65,24 @@ public class StudentServiceImpl implements StudentService, ResourceLoaderAware {
                     .filter(s -> s.birthDay().equals(lastBirthDay))
                     .collect(Collectors.toSet());
         }
+    }
+
+
+
+    @Override
+    public String generateVCard(Student student) {
+        return VCARD_TEMPLATE.
+            replace("%rev%", LocalDateTime.now().toString()).
+            replace("%bday%",student.birthDay().format(DateTimeFormatter.ofPattern("yyyyMMdd"))).
+            replace("%last_name%", student.lastName()).
+            replace("%first_name%", student.firstName());
+    }
+
+    @Override
+    public void printAllStudents() {
+        studentRepository
+            .getAllStudents()
+            .forEach(studentPrinterService::printDetails);
     }
 
     @Override
