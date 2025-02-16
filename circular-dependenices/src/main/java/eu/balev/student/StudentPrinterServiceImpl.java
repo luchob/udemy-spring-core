@@ -1,24 +1,23 @@
 package eu.balev.student;
 
 import eu.balev.student.model.Student;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class StudentPrinterServiceImpl implements StudentPrinterService{
 
-  private StudentService studentService;
+  private final StudentService studentService;
 
-  @Autowired
-  public StudentPrinterServiceImpl setStudentService(StudentService studentService) {
+  public StudentPrinterServiceImpl(@Lazy StudentService studentService) {
     this.studentService = studentService;
-    return this;
   }
 
   @Override
-  public void printDetails(Student student) {
-    System.out.println("------");
-    System.out.println(student.name());
+  public void printStudent(Student student) {
+    System.out.println("---------" + student.name() + "----------");
     System.out.println(studentService.generateVCard(student));
+    System.out.println("----------------------------");
+
   }
 }

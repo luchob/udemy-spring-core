@@ -15,11 +15,10 @@ public class Main {
         ctx.registerShutdownHook();
 
         StudentService studentService = ctx.getBean(StudentService.class);
-        Student s = studentService.findYoungestStudents().iterator().next();
-        System.out.println("---------");
-        System.out.println(studentService.generateVCard(s));
 
-        System.out.println("---------");
+        Student next = studentService.findYoungestStudents().iterator().next();
+
+        System.out.println(studentService.generateVCard(next));
     }
 
 }

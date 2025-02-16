@@ -80,9 +80,7 @@ public class StudentServiceImpl implements StudentService, ResourceLoaderAware {
 
     @Override
     public void printAllStudents() {
-        studentRepository
-            .getAllStudents()
-            .forEach(studentPrinterService::printDetails);
+        studentRepository.getAllStudents().forEach(studentPrinterService::printStudent);
     }
 
     @Override

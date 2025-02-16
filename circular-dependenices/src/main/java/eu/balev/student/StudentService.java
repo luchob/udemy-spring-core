@@ -7,11 +7,11 @@ public interface StudentService {
 
     Set<Student> findYoungestStudents();
 
-    String generateVCard(Student student);
-
-    void printAllStudents();
-
     void init();
 
     void destroy();
+
+    String generateVCard(Student s);
+
+    void printAllStudents();
 }
