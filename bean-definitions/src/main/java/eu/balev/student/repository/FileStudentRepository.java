@@ -12,12 +12,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Priority(0)
 public class FileStudentRepository implements StudentRepository {
-
-    public FileStudentRepository() {
-        System.out.println("In constructor: " + this.getClass().getName());
-    }
 
     @Override
     public List<Student> getAllStudents() {

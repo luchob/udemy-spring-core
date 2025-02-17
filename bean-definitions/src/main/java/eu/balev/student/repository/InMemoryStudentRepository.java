@@ -14,12 +14,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Priority(100)
 public class InMemoryStudentRepository implements StudentRepository {
-
-    public InMemoryStudentRepository() {
-        System.out.println("In constructor: " + this.getClass().getName());
-    }
 
     private final List<Student> students = List.of(
             new Student("Nina Bojinova", LocalDate.of(1977, 12, 9)),

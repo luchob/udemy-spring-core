@@ -18,7 +18,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
-@Service("myStudentService")
 public class StudentServiceImpl implements StudentService,
     ResourceLoaderAware, BeanNameAware {
 
@@ -29,11 +28,6 @@ public class StudentServiceImpl implements StudentService,
     public StudentServiceImpl(
         @Value("${init.message}") String initMessage,
         List<StudentRepository> studentRepositories) {
-
-        System.out.println("-----");
-        studentRepositories.forEach(
-            sr -> System.out.println("Student repo: " + sr.getClass().getName())
-        );
 
         this.studentRepository = new CompositeStudentRepository(studentRepositories);
         this.initMessage = initMessage;
