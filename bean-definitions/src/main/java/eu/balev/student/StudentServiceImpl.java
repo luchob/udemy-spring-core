@@ -27,32 +27,10 @@ public class StudentServiceImpl implements StudentService,
 
     public StudentServiceImpl(
         @Value("${init.message}") String initMessage,
-        List<StudentRepository> studentRepositories) {
+        StudentRepository studentRepository) {
 
-        this.studentRepository = new CompositeStudentRepository(studentRepositories);
+        this.studentRepository = studentRepository;
         this.initMessage = initMessage;
-    }
-
-    static class CompositeStudentRepository implements StudentRepository {
-
-        private final List<StudentRepository> studentRepositories;
-
-        public CompositeStudentRepository(List<StudentRepository> studentRepositories) {
-            this.studentRepositories = studentRepositories;
-        }
-
-        @Override
-        public List<Student> getAllStudents() {
-            return studentRepositories
-                .stream()
-                .flatMap(sr -> sr.getAllStudents().stream())
-                .collect(Collectors.toList());
-        }
-
-        @Override
-        public long count() {
-            return studentRepositories.stream().mapToLong(StudentRepository::count).sum();
-        }
     }
 
     @Override
