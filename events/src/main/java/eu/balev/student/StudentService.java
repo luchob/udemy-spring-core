@@ -10,4 +10,6 @@ public interface StudentService {
     void init();
 
     void destroy();
+
+    void createStudent(Student student);
 }

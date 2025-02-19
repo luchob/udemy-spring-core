@@ -1,5 +1,6 @@
 package eu.balev.student;
 
+import eu.balev.student.model.NewStudentEvent;
 import eu.balev.student.model.Student;
 import eu.balev.student.repository.StudentRepository;
 import jakarta.annotation.PostConstruct;
@@ -8,63 +9,33 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.Lifecycle;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.context.ResourceLoaderAware;
-import org.springframework.context.event.EventListener;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
 @Service
 public class StudentServiceImpl implements StudentService,
-    ResourceLoaderAware, BeanNameAware {
+    ResourceLoaderAware, BeanNameAware, ApplicationEventPublisherAware {
 
     private final StudentRepository studentRepository;
     private String beanName;
     private final String initMessage;
 
+    private ApplicationEventPublisher applicationEventPublisher;
+
     public StudentServiceImpl(
         @Value("${init.message}") String initMessage,
-        List<StudentRepository> studentRepositories) {
+        StudentRepository studentRepository) {
 
-        this.studentRepository = new CompositeStudentRepository(studentRepositories);
+        this.studentRepository = studentRepository;
         this.initMessage = initMessage;
-    }
-
-    static class CompositeStudentRepository implements StudentRepository {
-
-        private final List<StudentRepository> studentRepositories;
-
-        public CompositeStudentRepository(List<StudentRepository> studentRepositories) {
-            this.studentRepositories = studentRepositories;
-        }
-
-        @Override
-        public List<Student> getAllStudents() {
-            return studentRepositories
-                .stream()
-                .flatMap(sr -> sr.getAllStudents().stream())
-                .collect(Collectors.toList());
-        }
-
-        @Override
-        public long count() {
-            return studentRepositories.stream().mapToLong(StudentRepository::count).sum();
-        }
-    }
-
-    @EventListener(ApplicationEvent.class)
-    void onApplicationEvent(ApplicationEvent applicationEvent) {
-        System.out.println("-------");
-        System.out.println(applicationEvent.getClass());
-        System.out.println(applicationEvent.getSource());
-        System.out.println("-------");
     }
 
     @Override
@@ -104,6 +75,13 @@ public class StudentServiceImpl implements StudentService,
     }
 
     @Override
+    public void createStudent(Student student) {
+        studentRepository.createStudent(student);
+
+        applicationEventPublisher.publishEvent(new NewStudentEvent(student));
+    }
+
+    @Override
     public void setResourceLoader(ResourceLoader resourceLoader) {
         Resource bannerResource = resourceLoader.getResource("classpath:banner.txt");
 
@@ -118,5 +96,10 @@ public class StudentServiceImpl implements StudentService,
     @Override
     public void setBeanName(String beanName) {
         this.beanName = beanName;
+    }
+
+    @Override
+    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 }

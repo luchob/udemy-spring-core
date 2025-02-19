@@ -7,4 +7,6 @@ public interface StudentRepository {
     List<Student> getAllStudents();
 
     long count();
+
+    void createStudent(Student student);
 }

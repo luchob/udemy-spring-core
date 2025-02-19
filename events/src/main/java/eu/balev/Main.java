@@ -1,10 +1,8 @@
 package eu.balev;
 
 import eu.balev.student.StudentService;
-import eu.balev.student.StudentServiceImpl;
 import eu.balev.student.model.Student;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.beans.factory.support.GenericBeanDefinition;
+import java.time.LocalDate;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -16,13 +14,11 @@ public class Main {
         );
 
         ctx.registerShutdownHook();
-//        ctx.start();
-        StudentService studentService2 = ctx.getBean(StudentService.class);
 
+        StudentService studentService = ctx.getBean(StudentService.class);
 
-//        for (Student youngestStudent : studentService.findYoungestStudents()) {
-//            System.out.println(youngestStudent);
-//        }
+        Student newStudent = new Student("John Smith", LocalDate.of(1999, 1, 1));
+        studentService.createStudent(newStudent);
     }
 
 }
