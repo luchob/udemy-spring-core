@@ -1,10 +1,10 @@
-package eu.balev.student;
+package eu.balev;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackages = "eu.balev")
-public class TestConfig {
+@ComponentScan("eu.balev")
+public class TestAppConfig {
 
 }

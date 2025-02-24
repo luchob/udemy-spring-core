@@ -1,5 +1,8 @@
 package eu.balev.student;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import eu.balev.TestAppConfig;
 import eu.balev.student.model.Student;
 import eu.balev.student.repository.StudentRepository;
 import java.time.LocalDate;
@@ -9,14 +12,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.bean.override.convention.TestBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 @ContextConfiguration(
-    classes = TestConfig.class
+    classes = TestAppConfig.class
 )
 @ExtendWith(SpringExtension.class)
 class StudentServiceImplTest {
@@ -25,20 +26,21 @@ class StudentServiceImplTest {
   private StudentService toTest;
 
   @TestBean(
-      methodName = "createTestRepository"
+      methodName="createTestStudentRepository"
   )
-  private StudentRepository studentRepository;
+  private StudentRepository testRepository;
 
   @Test
   void findYoungestStudents() {
     Set<Student> youngestStudents = toTest.findYoungestStudents();
+
     Assertions.assertEquals(2, youngestStudents.size());
-    Assertions.assertEquals(Set.of(TestStudentRepository.JOHN_SMITH_1990_3_3,
-        TestStudentRepository.PETER_SMITH_1990_3_3),
+    Assertions.assertEquals(
+        Set.of(TestStudentRepository.JOHN_SMITH_1990_3_3, TestStudentRepository.PETER_SMITH_1990_3_3),
         youngestStudents);
   }
 
-  static TestStudentRepository createTestRepository() {
+  static StudentRepository createTestStudentRepository() {
     return new TestStudentRepository();
   }
 }
