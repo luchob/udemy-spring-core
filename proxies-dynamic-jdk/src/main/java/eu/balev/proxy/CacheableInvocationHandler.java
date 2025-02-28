@@ -8,7 +8,7 @@ import java.util.Map;
 public class CacheableInvocationHandler implements InvocationHandler {
 
   private final Object realObject;
-  private final Map<String, Object> cache = new HashMap<>();
+  private final Map<String, Object> caches = new HashMap<>();
 
   public CacheableInvocationHandler(Object realObject) {
     this.realObject = realObject;
@@ -16,23 +16,20 @@ public class CacheableInvocationHandler implements InvocationHandler {
 
   @Override
   public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-
-    Cacheable cacheable = realObject.
-        getClass().
+    Cacheable cacheable = realObject.getClass().
         getMethod(method.getName(), method.getParameterTypes()).
         getAnnotation(Cacheable.class);
 
     if (cacheable != null) {
       String cacheId = cacheable.value();
-      Object cachedValue = cache.get(cacheId);
-      if (cachedValue != null) {
-        return cachedValue;
-      } else  {
-        cachedValue = method.invoke(realObject, args);
-        cache.put(cacheId, cachedValue);
-        return cachedValue;
+      if (caches.containsKey(cacheId)) {
+        return caches.get(cacheId);
+      } else {
+        Object result = method.invoke(realObject, args);
+        caches.put(cacheId, result);
+        return result;
       }
-    } else  {
+    } else {
       return method.invoke(realObject, args);
     }
   }

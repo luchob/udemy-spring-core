@@ -1,6 +1,5 @@
 package eu.balev.proxy;
 
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
