@@ -11,13 +11,17 @@ public class Main {
   public static void main(String[] args)
       throws Exception {
 
-    CacheableEnhancer<CalculatorImpl> enhancer = new CacheableEnhancer<>(new CalculatorImpl());
-    CalculatorImpl calculator = enhancer.enhance();
+    CalculatorImpl calculator = createProxy(CalculatorImpl.class);
 
     System.out.println(calculator.calculateNumber());
     System.out.println(calculator.calculateNumber());
     System.out.println(calculator.calculateNumber());
 
+  }
+
+  private static <T> T createProxy(Class<T> clazz) throws Exception {
+    CacheableEnhancer<T> enhancer = new CacheableEnhancer<>(clazz.getDeclaredConstructor().newInstance());
+    return enhancer.enhance();
   }
 
 }

@@ -18,11 +18,11 @@ public class CacheableEnhancer<T> {
   public T enhance() {
     Enhancer enhancer = new Enhancer();
     enhancer.setSuperclass(realObject.getClass());
-    enhancer.setCallback(createCallback());
+    enhancer.setCallback(createInterceptor());
     return (T)enhancer.create();
   }
 
-  private MethodInterceptor createCallback() {
+  private MethodInterceptor createInterceptor() {
 
     return (obj, method, args, proxy) -> {
 
