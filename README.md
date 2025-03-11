@@ -4,10 +4,6 @@
 
 Welcome to the GitHub repository of the Spring Framework Core udemy course! Here you can find all sample code from the course as well as the source of the course recommendation tool.
 
-## Course recommendation tool
-
-TODO
-
 ## Contents
 
 [Lecture 5: DI with Google Guice](https://github.com/luchob/udemy-spring-core/tree/main/di-guice)  
@@ -40,6 +36,10 @@ TODO
 [Lecture 35: What is a proxy?](https://github.com/luchob/udemy-spring-core/tree/main/proxies-use-case)  
 [Lecture 36: JDK Dynamic Proxies](https://github.com/luchob/udemy-spring-core/tree/main/proxies-dynamic-jdk)  
 [Lecture 37: CGLIB Proxies](https://github.com/luchob/udemy-spring-core/tree/main/proxies-cglib)  
+
+## Course recommendation tool
+
+The course recommendation tool is a small angular app that may help you with a decision weather to enroll in this course. The tool is available [online](https://balev.eu/spring-core-recommendation/). But you can also view its [source code](https://github.com/luchob/udemy-spring-core/tree/main/udemy-survey) or decide to answer the questions and calculate your score [manually](https://github.com/luchob/udemy-spring-core/tree/main/udemy-survey).
 
 ## Contributions
 
