@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Welcome to the GitHub repository of the Spring Framework Core udemy course. Here you can find all sample code from the course as well as the source of the course recommendation tool.
+Welcome to the GitHub repository of the Spring Framework Core udemy course! Here you can find all sample code from the course as well as the source of the course recommendation tool.
 
 ## Course recommendation tool
 
@@ -39,8 +39,14 @@ TODO
 [Lecture 34: Strange examples](https://github.com/luchob/udemy-spring-core/tree/main/proxies-use-case)  
 [Lecture 35: What is a proxy?](https://github.com/luchob/udemy-spring-core/tree/main/proxies-use-case)  
 [Lecture 36: JDK Dynamic Proxies](https://github.com/luchob/udemy-spring-core/tree/main/proxies-dynamic-jdk)  
-[TODO: Lecture 37: CGLIB Proxies]()  
+[Lecture 37: CGLIB Proxies](https://github.com/luchob/udemy-spring-core/tree/main/proxies-cglib)  
 
 ## Contributions
 
-TODO
+Sure, you can help with improving this course! We will all benefit this way.
+
+If you spot an error, please [submit an issue](https://github.com/luchob/udemy-spring-core/issues/new).
+If you just have a question issues are also welcome.
+If you want to make an improvement, please fork the project and create a PR.
+
+❤️Thank you very much!❤️

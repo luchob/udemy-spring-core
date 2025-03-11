@@ -2,16 +2,13 @@ package eu.balev;
 
 import eu.balev.proxy.CacheableEnhancer;
 import eu.balev.proxy.CalculatorImpl;
-import java.lang.reflect.InvocationTargetException;
-import org.springframework.cglib.proxy.Enhancer;
-import org.springframework.cglib.proxy.MethodInterceptor;
 
 public class Main {
 
   public static void main(String[] args)
       throws Exception {
 
-    CalculatorImpl calculator = createProxy(CalculatorImpl.class);
+    CalculatorImpl calculator = getBean(CalculatorImpl.class);
 
     System.out.println(calculator.calculateNumber());
     System.out.println(calculator.calculateNumber());
@@ -19,9 +16,9 @@ public class Main {
 
   }
 
-  private static <T> T createProxy(Class<T> clazz) throws Exception {
-    CacheableEnhancer<T> enhancer = new CacheableEnhancer<>(clazz.getDeclaredConstructor().newInstance());
-    return enhancer.enhance();
+  private static <T> T getBean(Class<T> clazz) throws Exception {
+    CacheableEnhancer<T> cacheableEnhancer = new CacheableEnhancer<>(clazz.getDeclaredConstructor().newInstance());
+    return cacheableEnhancer.enhance();
   }
 
 }

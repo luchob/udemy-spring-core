@@ -3,7 +3,7 @@ package eu.balev.proxy;
 public class CalculatorImpl {
 
   @Cacheable("calculateNumber")
-  public double calculateNumber() {
+  public final double calculateNumber() {
     System.out.println("calculateNumber");
     return Math.PI;
   }
