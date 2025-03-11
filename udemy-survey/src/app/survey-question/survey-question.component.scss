@@ -1,0 +1,31 @@
+@use '@angular/material' as mat;
+
+.questions-container {
+  display: flex; /* or inline-flex */
+  flex-direction: column;
+  max-width: 80%;
+  justify-content: center; /* Center horizontally */
+  margin: 0 auto; /* Center the container horizontally */
+
+  @media (max-width: 600px) {
+    max-width: 95%;
+  }
+}
+
+.answers-container {
+  display: flex; /* or inline-flex */
+  flex-direction: column;
+  justify-content: left;
+  max-width: 80%;
+  margin: 0 auto;
+
+  @media (max-width: 600px) {
+    max-width: 95%;
+  }
+}
+
+.question-title {
+  margin-bottom: 10px;
+  margin-top: 10px;
+  font: var(--mat-sys-title-large);
+}

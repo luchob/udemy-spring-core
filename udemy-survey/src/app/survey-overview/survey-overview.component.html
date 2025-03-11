@@ -1,0 +1,79 @@
+<mat-toolbar class="mat-toolbar">
+  <mat-toolbar-row>
+    <span>📖 Spring Framework core 📖</span>
+  </mat-toolbar-row>
+  <mat-toolbar-row>
+    <span>Enroll decision tool</span>
+    <span class="example-spacer"></span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="spacer"></div>
+
+<div class="instructions-container">
+  <div>❔Please answer the following questions to get an opinion if it is appropriate to enroll in the course.
+  </div>
+  <div>⚠️Please note that I do not guarantee that the recommendation is correct, I'm just doing my
+    best to help you with this decision.
+  </div>
+  <div>💡After you complete the survey, you will get a recommendation based on your answers at the
+    bottom of the page.
+  </div>
+</div>
+
+<div class="spacer"></div>
+
+<div class="recommendation">
+  You have {{ recommendationPoints() }} recommendation points out of 100.
+
+  <div class="spacer"></div>
+
+  <mat-progress-bar
+    mode="determinate"
+    [value]="recommendationPoints()">
+  </mat-progress-bar>
+
+</div>
+
+@for (question of surveyQuestions(); track question.id) {
+  <app-survey-question (newSelection)="onQuestionAnswered($event)"
+                       [surveyQuestion]="question">
+  </app-survey-question>
+}
+
+
+<div class="spacer-double"></div>
+
+<div class="recommendation">
+  You have {{ recommendationPoints() }} recommendation points out of 100.
+
+  <div class="spacer"></div>
+
+  <mat-progress-bar
+    mode="determinate"
+    [value]="recommendationPoints()">
+  </mat-progress-bar>
+
+</div>
+
+<div class="spacer-double"></div>
+
+
+<div class="recommendation">
+  @if (allQuestionsCompleted()) {
+    @if (recommendationPoints() > 80) {
+      <div>I definitely would recommend the course for you!</div>
+    } @else if (recommendationPoints() > 50) {
+      <div>Maybe you should enroll in the course!</div>
+    } @else if (recommendationPoints() > 40) {
+      <div>I'm not sure if the course is for you.</div>
+    } @else {
+      <div>I would not recommend the course for you. I do not want that you remain disappointed...
+      </div>
+    }
+  } @else {
+    <div>Please answer all questions to get a recommendation.</div>
+  }
+</div>
+
+<div class="spacer-double"></div>

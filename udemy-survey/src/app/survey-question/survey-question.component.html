@@ -1,0 +1,26 @@
+@if (surveyQuestion) {
+
+  <div class="questions-container">
+    <div class="question-title">{{ surveyQuestion.question }}</div>
+
+    <div>
+      <mat-radio-group
+        class="answers-container"
+        (change)="onSelectionChange($event)"
+      >
+
+        <mat-radio-button [value]="surveyQuestion.score1">{{ surveyQuestion.answer1 }}</mat-radio-button>
+        <mat-radio-button [value]="surveyQuestion.score2">{{ surveyQuestion.answer2 }}</mat-radio-button>
+        @if (surveyQuestion.answer3) {
+          <mat-radio-button [value]="surveyQuestion.score3">{{ surveyQuestion.answer3 }}</mat-radio-button>
+        }
+        @if (surveyQuestion.answer4) {
+          <mat-radio-button [value]="surveyQuestion.score4">{{ surveyQuestion.answer4 }}</mat-radio-button>
+        }
+
+      </mat-radio-group>
+    </div>
+
+  </div>
+
+}

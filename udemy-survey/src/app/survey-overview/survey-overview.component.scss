@@ -1,0 +1,40 @@
+@use '@angular/material' as mat;
+
+.mat-toolbar {
+  @include mat.toolbar-overrides((
+    title-text-size: var(--mat-sys-headline-medium-size),
+  ));
+}
+
+.spacer {
+  margin-top: 30px;
+}
+
+.spacer-double {
+  margin-top: 60px;
+}
+
+.instructions-container {
+  display: flex; /* or inline-flex */
+  flex-direction: column;
+  max-width: 80%;
+  justify-content: center; /* Center horizontally */
+  margin: auto;
+  font: var(--mat-sys-body-large);
+
+  @media (max-width: 600px) {
+    max-width: 95%;
+  }
+}
+
+.recommendation {
+  display: flex; /* or inline-flex */
+  flex-direction: column;
+  max-width: 80%;
+  justify-content: center; /* Center horizontally */
+  margin: auto;
+
+  @media (max-width: 600px) {
+    max-width: 95%;
+  }
+}
