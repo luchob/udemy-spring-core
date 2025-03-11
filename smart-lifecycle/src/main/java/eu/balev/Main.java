@@ -5,6 +5,7 @@ import eu.balev.student.StudentServiceImpl;
 import eu.balev.student.model.Student;
 import eu.balev.student.repository.FileStudentRepository;
 import eu.balev.student.repository.InMemoryStudentRepository;
+import java.util.Scanner;
 import java.util.concurrent.CountDownLatch;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -19,15 +20,27 @@ public class Main {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(
             "eu.balev"
         );
+        System.out.println("1----");
+        ctx.registerShutdownHook();
+        System.out.println("2----");
+        ctx.start();
+        System.out.println("3----");
 
-        //ctx.registerShutdownHook();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Press Enter to stop...");
+        scanner.nextLine();
+        System.out.println("4----");
 
-        CountDownLatch latch = new CountDownLatch(1);
-        try {
-            latch.await();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        ctx.stop();
+        System.out.println("5----");
+
+        System.out.println("Press Enter to start...");
+        scanner.nextLine();
+        ctx.start();
+        System.out.println("6----");
+
+        System.out.println("Press Enter to shutdown...");
+        scanner.nextLine();
     }
 
 }
