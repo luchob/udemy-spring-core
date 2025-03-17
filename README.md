@@ -30,12 +30,11 @@ Welcome to the GitHub repository of the Spring Framework Core udemy course! Here
 [Lecture 28: Circular dependencies](https://github.com/luchob/udemy-spring-core/tree/main/circular-dependenices)  
 [Lecture 29: Bean definitions](https://github.com/luchob/udemy-spring-core/tree/main/bean-definitions)  
 [Lecture 30: Application context and events](https://github.com/luchob/udemy-spring-core/tree/main/events)  
-[Lecture 31: Test application contexts](https://github.com/luchob/udemy-spring-core/tree/main/test-app-context)  
-[TODO: Lecture 32: SmartLifecycle beans]()  
-[Lecture 34: Strange examples](https://github.com/luchob/udemy-spring-core/tree/main/proxies-use-case)  
-[Lecture 35: What is a proxy?](https://github.com/luchob/udemy-spring-core/tree/main/proxies-use-case)  
-[Lecture 36: JDK Dynamic Proxies](https://github.com/luchob/udemy-spring-core/tree/main/proxies-dynamic-jdk)  
-[Lecture 37: CGLIB Proxies](https://github.com/luchob/udemy-spring-core/tree/main/proxies-cglib)  
+[Lecture 31: Test application contexts](https://github.com/luchob/udemy-spring-core/tree/main/test-app-context)
+[Lecture 33: Strange examples](https://github.com/luchob/udemy-spring-core/tree/main/proxies-use-case)  
+[Lecture 34: What is a proxy?](https://github.com/luchob/udemy-spring-core/tree/main/proxies-use-case)  
+[Lecture 35: JDK Dynamic Proxies](https://github.com/luchob/udemy-spring-core/tree/main/proxies-dynamic-jdk)  
+[Lecture 36: CGLIB Proxies](https://github.com/luchob/udemy-spring-core/tree/main/proxies-cglib)  
 
 ## Course recommendation tool
 
