@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Welcome to the GitHub repository of the Spring Framework Core udemy course! Here you can find all sample code from the course as well as the source of the course recommendation tool.
+Welcome to the official GitHub repository of the Spring Framework Core Udemy course! Here you can find all sample code from the course as well as the source of the course recommendation tool.
 
 ## Contents
 
