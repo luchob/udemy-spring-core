@@ -4,7 +4,7 @@
 
 Welcome to the official GitHub repository of the Spring Framework Core Udemy course! Here you can find all sample code from the course as well as the source of the course recommendation tool.
 
-If you really decide to try it you can award my effort by enrolling from [here](https://www.udemy.com/course/spring-framework-di/?referralCode=863C74A59C93304B09B6).
+If you really decide to try it you can award my effort by enrolling from [here](https://www.udemy.com/course/spring-framework-di/?referralCode=863C74A59C93304B09B6). ❤️
 
 ## Contents
 
