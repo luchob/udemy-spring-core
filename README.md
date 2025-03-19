@@ -4,6 +4,8 @@
 
 Welcome to the GitHub repository of the Spring Framework Core udemy course! Here you can find all sample code from the course as well as the source of the course recommendation tool.
 
+If you really decide to try it you can award my effort by enrolling from [here](https://www.udemy.com/course/spring-framework-di/?referralCode=863C74A59C93304B09B6).
+
 ## Contents
 
 [Lecture 5: DI with Google Guice](https://github.com/luchob/udemy-spring-core/tree/main/di-guice)  
